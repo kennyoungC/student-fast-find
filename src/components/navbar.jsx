@@ -1,12 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import {
-  Navbar,
-  Form,
-  FormControl,
-  Button,
-  Nav,
-  NavDropdown,
-} from "react-bootstrap"
+import { Navbar, Form, FormControl, Button, Nav } from "react-bootstrap"
 import { BiSearch } from "react-icons/bi"
 import { multiStateContext } from "../context/contextApi"
 import { Link, useNavigate, useLocation } from "react-router-dom"
@@ -44,6 +37,7 @@ const PageNavbar = () => {
         style={{
           border: "1px solid var(--primary-color)",
           backgroundColor: "var(--primary-color)",
+          padding: "0 10px",
         }}
       >
         <Link to={"/"}>

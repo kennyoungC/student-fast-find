@@ -2,13 +2,14 @@ import { Form, Button, Spinner } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import ErrorText from "./errorText"
+import { useNavigate } from "react-router-dom"
 
 const Register = ({ setIsLogin }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [allUsers, setAllUsers] = useState([])
   const [emailAlreadyExist, setEmailAlreadyExist] = useState(false)
   const [usernameAlreadyExist, setUsernameAlreadyExist] = useState(false)
-
+  const navigate = useNavigate()
   const [user, setUser] = useState({
     username: "",
     email: "",

@@ -58,7 +58,7 @@ const Details = () => {
     getAllUsersProduct()
   }, [])
   const handleFacebookShare = () => {
-    const productUrl = `https://www.sinsay.com/lt/lt/sportbaciai-2832o-99x`
+    const productUrl = `https://student-fast-find.herokuapp.com/products/${params}`
     const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       productUrl
     )}`
@@ -231,7 +231,6 @@ const Details = () => {
               justifyContent: "center",
             }}
             onClick={() => {
-              // navigator.clipboard.writeText(productUrl)
               handleFacebookShare()
             }}
           >

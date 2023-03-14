@@ -76,7 +76,7 @@ const Login = () => {
                   borderColor: "var(--primary-color)",
                 }}
                 type="submit"
-                className="btn btn-block "
+                className="btn btn-block mb-3 "
               >
                 {isLoading ? (
                   <Spinner
@@ -90,7 +90,7 @@ const Login = () => {
               </Button>
               <small className="mousehover">
                 <p
-                  className="m-1 text-center"
+                  className="m-1 text-center text-primary"
                   onClick={(e) => {
                     setIsLogin(false)
                   }}
