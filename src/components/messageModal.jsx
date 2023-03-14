@@ -45,7 +45,7 @@ export const MessageModal = ({
         <Modal.Title>Message</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form style={{ width: "28rem" }} onSubmit={() => {}}>
+        <Form style={{ width: "100%" }} onSubmit={() => {}}>
           <Form.Group className="mb-3">
             <Form.Label>Subject</Form.Label>
             <Form.Control
