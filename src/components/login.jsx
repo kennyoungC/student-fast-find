@@ -1,17 +1,15 @@
 import { Form, Button, Spinner } from "react-bootstrap"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import React from "react"
 import ErrorText from "./errorText"
 import "./style.scss"
 import Register from "./register"
-import { multiStateContext } from "../context/contextApi"
 import loginImage from "./../assets/login_img.png"
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true)
-  const { setUser } = useContext(multiStateContext)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")

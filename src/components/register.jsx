@@ -1,10 +1,13 @@
 import { Form, Button, Spinner } from "react-bootstrap"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import ErrorText from "./errorText"
 
 const Register = ({ setIsLogin }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [allUsers, setAllUsers] = useState([])
+  const [emailAlreadyExist, setEmailAlreadyExist] = useState(false)
+  const [usernameAlreadyExist, setUsernameAlreadyExist] = useState(false)
 
   const [user, setUser] = useState({
     username: "",
@@ -14,6 +17,14 @@ const Register = ({ setIsLogin }) => {
     avatar: "",
     error: "",
   })
+  useEffect(() => {
+    const isTrue = allUsers.some((self) => self.email === user.email)
+    setEmailAlreadyExist(isTrue)
+  }, [allUsers, user.email])
+  useEffect(() => {
+    const isTrue = allUsers.some((self) => self.username === user.username)
+    setUsernameAlreadyExist(isTrue)
+  }, [allUsers, user.username])
 
   const [fileError, setFileError] = useState(false)
 
@@ -43,6 +54,7 @@ const Register = ({ setIsLogin }) => {
   }
 
   const handleSubmit = async (e) => {
+    if (emailAlreadyExist && usernameAlreadyExist) return
     setIsLoading(true)
     e.preventDefault()
     await axios
@@ -58,6 +70,19 @@ const Register = ({ setIsLogin }) => {
         }
       })
   }
+  const fetchAllUser = async () => {
+    await axios
+      .get("http://localhost:3001/users/all")
+      .then((res) => {
+        setAllUsers(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  useEffect(() => {
+    fetchAllUser()
+  }, [])
 
   const isSetNewUser = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
@@ -76,6 +101,9 @@ const Register = ({ setIsLogin }) => {
             name="username"
             onChange={isSetNewUser}
           />
+          {usernameAlreadyExist && (
+            <span className="text-danger">Username Already exist*</span>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -87,6 +115,9 @@ const Register = ({ setIsLogin }) => {
             name="email"
             onChange={isSetNewUser}
           />
+          {emailAlreadyExist && (
+            <span className="text-danger">Email Already exist*</span>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -116,6 +147,7 @@ const Register = ({ setIsLogin }) => {
             type="file"
             placeholder="Profile Picture"
             onChange={onFileChange}
+            required
           />
         </Form.Group>
         {fileError && (
@@ -139,7 +171,7 @@ const Register = ({ setIsLogin }) => {
                 className="align-self-center"
               />
             ) : (
-              "Login"
+              "Register"
             )}
           </Button>
         </div>

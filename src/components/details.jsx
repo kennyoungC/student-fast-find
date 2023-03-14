@@ -5,14 +5,16 @@ import axios from "axios"
 import { parseISO, format } from "date-fns"
 import { useState } from "react"
 import { AiFillStar } from "react-icons/ai"
-import { messageModal } from "./messageModal"
+import { MessageModal } from "./messageModal"
 import { multiStateContext } from "../context/contextApi"
+import { FaFacebook } from "react-icons/fa"
 
 const Details = () => {
   const { user, handleShowSignIn } = React.useContext(multiStateContext)
   const [productDetails, setProductDetails] = React.useState([])
   const [isMyProduct, setIsMyProduct] = useState(false)
   const [show, setShow] = useState(false)
+  const [isOnWatchlist, setIsOnWatchlist] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -29,7 +31,6 @@ const Details = () => {
       })
       .then((res) => {
         setProductDetails(res.data)
-        console.log("data", res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -56,7 +57,13 @@ const Details = () => {
     getProductsDetails()
     getAllUsersProduct()
   }, [])
-
+  const handleFacebookShare = () => {
+    const productUrl = `https://www.sinsay.com/lt/lt/sportbaciai-2832o-99x`
+    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      productUrl
+    )}`
+    window.open(shareUrl, "_blank")
+  }
   return (
     <Container style={{ marginTop: "24px", marginBottom: "80px" }}>
       <Row>
@@ -168,17 +175,49 @@ const Details = () => {
           >
             Write a message
           </Button>
-          <Button
-            style={{
-              width: "100%",
-              backgroundColor: "transparent",
-              color: "var(--tertiary-color)",
-              border: "1px solid var(--tertiary-color)",
-            }}
-            className="mb-3"
-          >
-            Add to watchlist
-          </Button>
+          {!isMyProduct && (
+            <>
+              {isOnWatchlist && (
+                <Button
+                  style={{
+                    width: "100%",
+                    backgroundColor: "var(--primary-color)",
+                    color: "white",
+                    border: "1px solid var(--tertiary-color)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    justifyContent: "center",
+                  }}
+                  className="mb-3"
+                  onClick={() => {
+                    setIsOnWatchlist(false)
+                  }}
+                >
+                  Added to watchlist{" "}
+                  <span style={{ marginTop: "-4px" }}>
+                    <AiFillStar />
+                  </span>
+                </Button>
+              )}
+              {!isOnWatchlist && (
+                <Button
+                  style={{
+                    width: "100%",
+                    backgroundColor: "transparent",
+                    color: "var(--tertiary-color)",
+                    border: "1px solid var(--tertiary-color)",
+                  }}
+                  className="mb-3"
+                  onClick={() => {
+                    setIsOnWatchlist(true)
+                  }}
+                >
+                  Add to watchlist
+                </Button>
+              )}
+            </>
+          )}
           <Button
             variant="primary"
             style={{
@@ -186,10 +225,22 @@ const Details = () => {
               backgroundColor: "transparent",
               color: "var(--tertiary-color)",
               border: "1px solid var(--tertiary-color)",
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              justifyContent: "center",
+            }}
+            onClick={() => {
+              // navigator.clipboard.writeText(productUrl)
+              handleFacebookShare()
             }}
           >
-            share ad
+            Share Ad{" "}
+            <span style={{ marginTop: "-4px" }}>
+              <FaFacebook />
+            </span>
           </Button>
+
           <Card
             className="mt-3"
             style={{
@@ -209,14 +260,14 @@ const Details = () => {
           </Card>
         </Col>
       </Row>
-      {messageModal(
-        productDetails.title,
-        show,
-        handleClose,
-        user,
-        productDetails?.poster?.username,
-        handleShowSignIn
-      )}
+      <MessageModal
+        subject={productDetails.title}
+        handleClose={handleClose}
+        show={show}
+        user={user}
+        sellerEmail={productDetails?.poster?.email}
+        handleShowSignIn={handleShowSignIn}
+      />
     </Container>
   )
 }

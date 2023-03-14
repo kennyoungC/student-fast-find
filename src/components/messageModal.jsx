@@ -1,14 +1,44 @@
+import axios from "axios"
+import { useState } from "react"
 import { Modal, Form, Button } from "react-bootstrap"
-import { Link } from "react-router-dom"
 
-export const messageModal = (
-  title,
+export const MessageModal = ({
+  subject,
   show,
   handleClose,
+  sellerEmail,
   user,
-  seller,
-  showLogin
-) => {
+  showLogin,
+}) => {
+  const [message, setMessage] = useState("")
+  const capitalizedTitle = subject?.charAt(0).toUpperCase() + subject?.slice(1)
+
+  const sendMessageHandler = async () => {
+    const token = localStorage.getItem("token")
+    try {
+      const response = await axios.post(
+        `http://localhost:3001/products/send`,
+        {
+          sellerEmail,
+          buyerEmail: user.email,
+          subject: capitalizedTitle,
+          message,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      if (response.status === 200) {
+        alert("Message sent successfully!")
+      } else alert("Message not sent!")
+      setMessage("")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -21,12 +51,18 @@ export const messageModal = (
             <Form.Control
               type="text"
               placeholder="Enter subject"
-              value={title}
+              defaultValue={capitalizedTitle}
             />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>message</Form.Label>
-            <Form.Control as="textarea" rows={3} placeholder="Enter message" />
+            <Form.Control
+              value={message}
+              as="textarea"
+              rows={3}
+              placeholder="Enter message"
+              onChange={(e) => setMessage(e.target.value)}
+            />
           </Form.Group>
           <Modal.Footer>
             {user ? (
@@ -34,7 +70,13 @@ export const messageModal = (
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    sendMessageHandler()
+                    handleClose()
+                  }}
+                >
                   Send
                 </Button>
               </>
