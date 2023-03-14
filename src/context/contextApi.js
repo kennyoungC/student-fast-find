@@ -27,11 +27,14 @@ export const StateContext = () => {
     const token = localStorage.getItem("token")
     if (token) {
       try {
-        const response = await axios.get("http://localhost:3001/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        const response = await axios.get(
+          "https://student-fast-find.herokuapp.com/users/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         setUser(response.data)
       } catch (error) {
         console.log(error)
@@ -72,8 +75,8 @@ export const StateContext = () => {
     const token = localStorage.getItem("token")
     const url =
       selectedCategory === "All"
-        ? "http://localhost:3001/products"
-        : `http://localhost:3001/products?category=${selectedCategory}`
+        ? "https://student-fast-find.herokuapp.com/products"
+        : `https://student-fast-find.herokuapp.com/products?category=${selectedCategory}`
 
     const response = await axios.get(url, {
       headers: {

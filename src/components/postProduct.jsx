@@ -54,7 +54,7 @@ const PostModel = ({ handleClose, show, updateUi }) => {
     const token = localStorage.getItem("token")
     axios
 
-      .get("http://localhost:3001/users/me", {
+      .get("https://student-fast-find.herokuapp.com/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +77,7 @@ const PostModel = ({ handleClose, show, updateUi }) => {
     const token = localStorage.getItem("token")
     console.log(product)
     await axios
-      .post("http://localhost:3001/products", formData, {
+      .post("https://student-fast-find.herokuapp.com/products", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

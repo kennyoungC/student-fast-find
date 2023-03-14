@@ -17,7 +17,7 @@ export const MessageModal = ({
     const token = localStorage.getItem("token")
     try {
       const response = await axios.post(
-        `http://localhost:3001/products/send`,
+        `https://student-fast-find.herokuapp.com/products/send`,
         {
           sellerEmail,
           buyerEmail: user.email,

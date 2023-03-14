@@ -42,7 +42,7 @@ const Account = () => {
     const token = localStorage.getItem("token")
 
     await axios
-      .put(`http://localhost:3001/users/me`, formData, {
+      .put(`https://student-fast-find.herokuapp.com/users/me`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

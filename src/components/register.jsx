@@ -58,7 +58,7 @@ const Register = ({ setIsLogin }) => {
     setIsLoading(true)
     e.preventDefault()
     await axios
-      .post("http://localhost:3001/users/register", formData)
+      .post("https://student-fast-find.herokuapp.com/users/register", formData)
       .then((res) => {
         setIsLoading(false)
         setIsLogin(true)
@@ -72,7 +72,7 @@ const Register = ({ setIsLogin }) => {
   }
   const fetchAllUser = async () => {
     await axios
-      .get("http://localhost:3001/users/all")
+      .get("https://student-fast-find.herokuapp.com/users/all")
       .then((res) => {
         setAllUsers(res.data)
       })

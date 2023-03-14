@@ -49,7 +49,7 @@ const EditModel = ({ singleId, deleteUI }) => {
   const getProductsDetails = async () => {
     const token = localStorage.getItem("token")
     await axios
-      .get(`http://localhost:3001/products/${singleId}`, {
+      .get(`https://student-fast-find.herokuapp.com/products/${singleId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -83,11 +83,15 @@ const EditModel = ({ singleId, deleteUI }) => {
     e.preventDefault()
     const token = localStorage.getItem("token")
     await axios
-      .put(`http://localhost:3001/products/${singleId}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        `https://student-fast-find.herokuapp.com/products/${singleId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         updateEdit(res)
         setIsLoading(false)
@@ -105,7 +109,7 @@ const EditModel = ({ singleId, deleteUI }) => {
     alert("Are you Sure?")
     const token = localStorage.getItem("token")
     await axios
-      .delete(`http://localhost:3001/products/${singleId}`, {
+      .delete(`https://student-fast-find.herokuapp.com/products/${singleId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -23,7 +23,7 @@ const Login = () => {
     setIsLoading(true)
     e.preventDefault()
     axios
-      .post("http://localhost:3001/users/login", {
+      .post("https://student-fast-find.herokuapp.com/users/login", {
         email,
         password,
       })

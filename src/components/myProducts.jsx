@@ -28,7 +28,7 @@ const MyProducts = () => {
   const myProduct = useCallback(async () => {
     const token = localStorage.getItem("token")
     await axios
-      .get("http://localhost:3001/users/me/products", {
+      .get("https://student-fast-find.herokuapp.com/users/me/products", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

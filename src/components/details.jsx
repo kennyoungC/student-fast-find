@@ -24,7 +24,7 @@ const Details = () => {
   const getProductsDetails = useCallback(async () => {
     const token = localStorage.getItem("token")
     await axios
-      .get(`http://localhost:3001/products/${params}`, {
+      .get(`https://student-fast-find.herokuapp.com/products/${params}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const Details = () => {
   const getAllUsersProduct = () => {
     const token = localStorage.getItem("token")
     axios
-      .get("http://localhost:3001/users/me/products", {
+      .get("https://student-fast-find.herokuapp.com/users/me/products", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
