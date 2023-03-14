@@ -30,7 +30,7 @@ const PostModel = ({ handleClose, show, updateUi }) => {
   formData.append("poster", product.poster)
 
   const onFileChange = (e) => {
-    if (e.target && e.target.files[0] && e.target.files[0].size < 1000000) {
+    if (e.target && e.target.files[0] && e.target.files[0].size < 5000000) {
       setFileError(false)
       setProduct({ ...product, image: e.target.files[0] })
     } else {
@@ -179,7 +179,7 @@ const PostModel = ({ handleClose, show, updateUi }) => {
               <Form.Control type="file" onChange={onFileChange} />
             </Form.Group>
             {fileError && (
-              <p style={{ color: "red" }}>File size should be less than 1MB</p>
+              <p style={{ color: "red" }}>File size should be less than 5MB</p>
             )}
             <div className="d-flex justify-content-center">
               <Button variant="primary" type="submit" disabled={!formIsValid}>
