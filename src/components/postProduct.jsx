@@ -101,7 +101,7 @@ const PostModel = ({ handleClose, show, updateUi }) => {
           <Modal.Title>Post Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form style={{ width: "28rem" }} onSubmit={postProduct}>
+          <Form style={{ width: "100%" }} onSubmit={postProduct}>
             <Form.Group className="mb-3">
               <Form.Label>Title</Form.Label>
               <Form.Control
