@@ -14,8 +14,8 @@ export const mapProduct = (products) => {
           <Card.Img
             variant="top"
             src={product.image}
-            width={150}
-            height={200}
+            className="img-fluid w-100"
+            style={{ height: "225px" }}
           />
         </Link>
         <Card.Title

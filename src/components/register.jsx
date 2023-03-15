@@ -9,7 +9,6 @@ const Register = ({ setIsLogin }) => {
   const [allUsers, setAllUsers] = useState([])
   const [emailAlreadyExist, setEmailAlreadyExist] = useState(false)
   const [usernameAlreadyExist, setUsernameAlreadyExist] = useState(false)
-  const navigate = useNavigate()
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -28,6 +27,7 @@ const Register = ({ setIsLogin }) => {
   }, [allUsers, user.username])
 
   const [fileError, setFileError] = useState(false)
+  const [fileErrorText, setFileErrorText] = useState(false)
 
   let formData = new FormData()
   formData.append("username", user.username)
@@ -37,7 +37,18 @@ const Register = ({ setIsLogin }) => {
   formData.append("avatar", user.avatar)
 
   const onFileChange = (e) => {
-    if (e.target && e.target.files[0] && e.target.files[0].size < 1000000) {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg" ||
+      e.target.files[0].type === "image/jpg"
+    ) {
+      setFileError(false)
+      setFileErrorText(false)
+    } else {
+      setFileError(true)
+      setFileErrorText(true)
+    }
+    if (e.target && e.target.files[0] && e.target.files[0].size < 5016589) {
       setFileError(false)
       setUser({ ...user, avatar: e.target.files[0] })
     } else {
@@ -152,8 +163,12 @@ const Register = ({ setIsLogin }) => {
           />
         </Form.Group>
         {fileError && (
-          <p className="text-danger">File size should be less than 1MB</p>
+          <p className="text-danger">File size should be less than 5MB</p>
         )}
+        {fileErrorText && (
+          <p className="text-danger">Only PNG and JPEG are supported</p>
+        )}
+
         <div className="d-grid gap-2">
           <Button
             style={{

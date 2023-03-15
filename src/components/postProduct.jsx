@@ -16,6 +16,7 @@ const PostModel = ({ handleClose, show, updateUi }) => {
     poster: "",
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [fileErrorText, setFileErrorText] = useState(false)
 
   const [fileError, setFileError] = useState(false)
 
@@ -30,6 +31,17 @@ const PostModel = ({ handleClose, show, updateUi }) => {
   formData.append("poster", product.poster)
 
   const onFileChange = (e) => {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg" ||
+      e.target.files[0].type === "image/jpg"
+    ) {
+      setFileError(false)
+      setFileErrorText(false)
+    } else {
+      setFileError(true)
+      setFileErrorText(true)
+    }
     if (e.target && e.target.files[0] && e.target.files[0].size < 5000000) {
       setFileError(false)
       setProduct({ ...product, image: e.target.files[0] })
@@ -179,7 +191,10 @@ const PostModel = ({ handleClose, show, updateUi }) => {
               <Form.Control type="file" onChange={onFileChange} />
             </Form.Group>
             {fileError && (
-              <p style={{ color: "red" }}>File size should be less than 5MB</p>
+              <p className="text-danger">File size should be less than 5MB</p>
+            )}
+            {fileErrorText && (
+              <p className="text-danger">Only PNG and JPEG are supported</p>
             )}
             <div className="d-flex justify-content-center">
               <Button variant="primary" type="submit" disabled={!formIsValid}>

@@ -91,8 +91,10 @@ const MyProducts = () => {
                       <Card.Img
                         variant="top"
                         src={product.image}
-                        width={200}
-                        height={250}
+                        className="img-fluid w-100"
+                        style={{
+                          height: "225px",
+                        }}
                       />
                       <div
                         className="card-body "
